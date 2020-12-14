@@ -5,7 +5,7 @@ exports.config = {
   debug: false,
   allScriptsTimeout: 11000,
   specs: [
-    './e2e/features/*/*.feature'
+    './e2e/features/**/*.feature'
   ],
   capabilities: {
     'browserName': 'chrome'
@@ -14,10 +14,11 @@ exports.config = {
   allScriptsTimeout: 45000,
   baseUrl: 'http://localhost:4200/',
   framework: 'custom',
+  frameworkPath: require.resolve('protractor-cucumber-framework'),
   cucumberOpts: {
     strict: true,
     require: [
-      './e2e/**/*.steps.ts'
+      './e2e/steps/**/*.steps.ts'
     ],
     format: [
       'json:test-reports/cucumber-test-results.json'

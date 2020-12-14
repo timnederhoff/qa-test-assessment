@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+
+      <h1>The Star Wars Search</h1>
+      <br>
+
+      <app-search-form></app-search-form>
+      <br>
+
+      <div *ngIf="isLoading">Loading...</div>
+
+      <div *ngIf="isNotFound(searchResult, isLoading)">Not found.</div>
+
+      <div *ngIf="!isLoading">
+        <div *ngIf="searchType === 'people'">
+          <div *ngFor="let character of searchResult">
+            <app-character [character]="character"></app-character>
+            <br>
+          </div>
+        </div>
+
+        <div *ngIf="searchType === 'planets'">
+          <div *ngFor="let planet of searchResult">
+            <app-planet [planet]="planet"></app-planet>
+            <br>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

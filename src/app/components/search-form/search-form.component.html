@@ -1,0 +1,36 @@
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="searchForm" (ngSubmit)="search()">
+      <div class="form-row align-items-center">
+
+        <div class="col-auto">
+          <div class="form-check mb-2">
+            <input formControlName="searchType" class="form-check-input" type="radio" id="people" value="people">
+            <label class="form-check-label" for="people">
+              People
+            </label>
+          </div>
+        </div>
+
+        <div class="col-auto">
+          <div class="form-check mb-2">
+            <input formControlName="searchType" class="form-check-input" type="radio" id="planets" value="planets">
+            <label class="form-check-label" for="planets">
+              Planets
+            </label>
+          </div>
+        </div>
+
+        <div class="col-auto">
+          <label class="sr-only" for="query">Query</label>
+          <input formControlName="query" type="search" class="form-control mb-2" id="query">
+        </div>
+
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary mb-2">Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+

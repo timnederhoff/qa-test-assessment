@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const baseUrl = 'https://swapi.co/api/';
+const baseUrl = 'https://swapi.dev/api/';
 
 @Injectable()
 export class ApiService {

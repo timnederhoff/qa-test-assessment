@@ -13,14 +13,12 @@ let currentName: string;
 
 Given('I navigate to {string}', async (host) => {
     await browser.get('http://' + host + ':4200/');
-    await browser.sleep(2000);
 });
 
 When('I search for {string}s name', async (name) => {
     await searchFormPO.input.sendKeys(name);
     await searchFormPO.searchBtn.click();
     currentName = name;
-    await browser.sleep(2000);
 });
 
 Then('I see Lukes details', async () => {

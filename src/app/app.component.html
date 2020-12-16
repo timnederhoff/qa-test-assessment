@@ -10,7 +10,7 @@
 
       <div *ngIf="isLoading">Loading...</div>
 
-      <div *ngIf="isNotFound(searchResult, isLoading)">Not found.</div>
+      <div *ngIf="isNotFound(searchResult, isLoading)" class="e2e-not-found-message">Not found.</div>
 
       <div *ngIf="!isLoading">
         <div *ngIf="searchType === 'people'">

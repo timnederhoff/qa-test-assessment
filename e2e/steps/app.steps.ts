@@ -43,3 +43,7 @@ Then('I see multiple Star Wars characters partially matching the name:', async (
     const expectedNames = dataTable.raw().map(columnArray => columnArray[0]);
     await chai.expect(results.getNames()).to.eventually.have.same.members(expectedNames);
 });
+
+Then('The message {string} is shown', async (expectedMessageText) => {
+    await chai.expect(results.notFoundMessage()).to.eventually.equal(expectedMessageText);
+});

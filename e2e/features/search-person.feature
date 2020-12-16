@@ -21,3 +21,6 @@ Feature: Search for a Star Wars character
             | Anakin Skywalker |
             | Shmi Skywalker   |
 
+    Scenario: With non existing name
+        When I search for "nonexisting"s name
+        Then The message "Not found." is shown

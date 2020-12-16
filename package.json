@@ -8,7 +8,7 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
+    "e2e": "empty-dir test-reports && ng e2e",
     "postinstall": "./node_modules/protractor/bin/webdriver-manager update"
   },
   "private": true,
@@ -40,6 +40,7 @@
     "chai-as-promised": "^7.1.1",
     "codelyzer": "^4.5.0",
     "cucumber": "^4.2.1",
+    "empty-dir-cli": "^1.0.2",
     "jasmine-core": "^2.99.1",
     "jasmine-spec-reporter": "^4.2.1",
     "karma": "^4.2.0",

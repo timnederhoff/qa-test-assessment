@@ -1,3 +1,7 @@
+**NOTE**
+
+My results and findings are described in the [RESULT FILE](./RESULT_TIM_NEDERHOFF.MD)
+
 # FedEx Frontend QA - Javascript Test Assessment
 
 Currently the project works with **NODEJS 10 LTS** environment. Please make sure you MAC/PC has a 10.x node version installed. (https://nodejs.org/dist/latest-v10.x/). You can also try NODEJS 12 LTS as an experiment but support has not been verified. 

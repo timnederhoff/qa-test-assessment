@@ -1,29 +1,29 @@
+import { SearchFormPo } from '../page-objects/search-form.po';
 import { SearchResultsPo } from '../page-objects/search-results.po';
+import { Given, When, Then, setDefaultTimeout } from 'cucumber';
+import { browser } from 'protractor';
+import * as chai from 'chai';
+import * as chaiAsPromised from 'chai-as-promised';
 
-const { Given, When, Then, setDefaultTimeout } = require('cucumber');
-const { browser } = require('protractor');
-const chai = require('chai');
 const results = new SearchResultsPo();
-chai.use(require('chai-as-promised'));
+chai.use(chaiAsPromised);
 setDefaultTimeout(60 * 1000);
 
-const searchFormPO = require('../page-objects/search-form.po');
+const searchFormPO = new SearchFormPo();
 
 let currentName: string;
+let currentSearchType: string;
 
 Given('I navigate to {string}', async (host) => {
     await browser.get('http://' + host + ':4200/');
 });
 
-When('I search for {string}s name', async (name) => {
+When('I search a {string} for {string}s name', async (searchType, name) => {
+    await searchFormPO.selectSearchType(searchType);
     await searchFormPO.input.sendKeys(name);
     await searchFormPO.searchBtn.click();
     currentName = name;
-});
-
-Then('I see Lukes details', async () => {
-    await chai.expect(searchFormPO.firstCharacterName.getAttribute('innerText'))
-        .to.eventually.contain('Skywalker');
+    currentSearchType = searchType;
 });
 
 Then('I see that the {string} is {string}', async (detail, expectedValue) => {
@@ -33,13 +33,30 @@ Then('I see that the {string} is {string}', async (detail, expectedValue) => {
         case 'BIRTH YEAR': detailProperty = 'birthYear'; break;
         case 'EYE COLOR': detailProperty = 'eyeColor'; break;
         case 'SKIN COLOR': detailProperty = 'skinColor'; break;
+        case 'POPULATION': detailProperty = 'population'; break;
+        case 'CLIMATE': detailProperty = 'climate'; break;
+        case 'GRAVITY': detailProperty = 'gravity'; break;
     }
-    await chai.expect(results.getCharacterByName(currentName)[detailProperty].getText()).to.eventually.equal(expectedValue);
+    switch (currentSearchType) {
+        case 'person':
+            await chai.expect(results.getCharacterByName(currentName)[detailProperty].getText()).to.eventually.equal(expectedValue);
+            break;
+        case 'planet':
+            await chai.expect(results.getPlanetByName(currentName)[detailProperty].getText()).to.eventually.equal(expectedValue);
+            break;
+    }
 });
 
-Then('I see multiple Star Wars characters partially matching the name:', async (dataTable) => {
+Then('I see multiple Star Wars {string} partially matching the name:', async (searchType, dataTable) => {
     const expectedNames = dataTable.raw().map(columnArray => columnArray[0]);
-    await chai.expect(results.getNames()).to.eventually.have.same.members(expectedNames);
+    switch (searchType.toUpperCase().trim()) {
+        case 'CHARACTERS':
+            await chai.expect(results.getCharacterNames()).to.eventually.have.same.members(expectedNames);
+            break;
+        case 'PLANETS':
+            await chai.expect(results.getPlanetNames()).to.eventually.have.same.members(expectedNames);
+            break;
+    }
 });
 
 Then('The message {string} is shown', async (expectedMessageText) => {

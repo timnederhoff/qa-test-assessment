@@ -1,12 +1,13 @@
 import { SearchFormPo } from '../page-objects/search-form.po';
 import { SearchResultsPo } from '../page-objects/search-results.po';
 import { Given, When, Then, setDefaultTimeout } from 'cucumber';
-import { browser } from 'protractor';
+import {browser, protractor} from 'protractor';
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
 
 const results = new SearchResultsPo();
 chai.use(chaiAsPromised);
+const expect = chai.expect;
 setDefaultTimeout(60 * 1000);
 
 const searchFormPO = new SearchFormPo();
@@ -20,6 +21,7 @@ Given('I navigate to {string}', async (host) => {
 
 When('I search a {string} for {string}s name', async (searchType, name) => {
     await searchFormPO.selectSearchType(searchType);
+    await searchFormPO.input.clear();
     await searchFormPO.input.sendKeys(name);
     await searchFormPO.searchBtn.click();
     currentName = name;
@@ -59,6 +61,24 @@ Then('I see multiple Star Wars {string} partially matching the name:', async (se
     }
 });
 
+When('I type {string} for a {string} in the search field', async (name, searchType) => {
+    await searchFormPO.selectSearchType(searchType);
+    await searchFormPO.input.clear();
+    await searchFormPO.input.sendKeys(name);
+});
+When('I press enter to activate my search', async () => {
+    await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+});
+
 Then('The message {string} is shown', async (expectedMessageText) => {
-    await chai.expect(results.notFoundMessage()).to.eventually.equal(expectedMessageText);
+    await expect(results.notFoundMessage()).to.eventually.equal(expectedMessageText);
+});
+
+Then('I see the details of {string} in the results', async (name) => {
+    await expect(results.getCharacterByName(name).isPresent()).to.eventually.equal(true);
+
+});
+
+Then('no results are shown', async () => {
+    await expect(results.getCharacterNames()).to.eventually.equal([]);
 });

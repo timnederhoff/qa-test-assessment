@@ -3,11 +3,11 @@ import {element, $, $$, ElementFinder, by} from 'protractor';
 class Character {
     constructor(private card: ElementFinder) {}
 
-    gender: ElementFinder = this.card.$('.e2e-gender');
-    birthYear: ElementFinder = this.card.$('.e2e-birth_year');
-    eyeColor: ElementFinder = this.card.$('.e2e-eye_color');
-    skinColor: ElementFinder = this.card.$('.e2e-skin_color');
-
+    gender = this.card.$('.e2e-gender');
+    birthYear = this.card.$('.e2e-birth_year');
+    eyeColor = this.card.$('.e2e-eye_color');
+    skinColor = this.card.$('.e2e-skin_color');
+    isPresent = () => this.card.isPresent();
 }
 
 class Planet {
@@ -16,10 +16,10 @@ class Planet {
     population = this.card.$('.e2e-population');
     climate = this.card.$('.e2e-climate');
     gravity = this.card.$('.e2e-gravity');
+    isPresent = this.card.isPresent();
 }
 
 export class SearchResultsPo {
-    getResultCount = () => $$('.e2e-character').count();
     notFoundMessage = () => $('.e2e-not-found-message').getText();
 
     // I know xpath is not generally preferred because of performance reasons, but in this case the most effective method

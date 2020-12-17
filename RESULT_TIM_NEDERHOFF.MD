@@ -5,6 +5,8 @@
 * replaced the baseurl of the backend service (from swapi.co to swapi.dev)
 * set default timeout in step defs instead of setting each step def
 * removed browser.sleep(), didn't need an explicit wait because all results were waited for in the framework
+* in the application, I added test classes to page elements (i.e. e2e-character-card) for better element selection from
+  the tests.
 
 # Findings
 
